@@ -16,8 +16,8 @@
 
 class SparseMatrixCRS {
  public:
-  int numberOfRows;
   int numberOfColumns;
+  int numberOfRows;
 
   std::vector<double> values;
   std::vector<int> columnIndexes;
