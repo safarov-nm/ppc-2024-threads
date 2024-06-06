@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 #include <utility>
-#include <vector>dcdcc
+#include <vector>
 
 SparseMatrixCRS::SparseMatrixCRS(int _numberOfColumns, int _numberOfRows, const std::vector<double>& _values,
                                  const std::vector<int>& _columnIndexes, const std::vector<int>& _pointers)
