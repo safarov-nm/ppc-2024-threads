@@ -42,7 +42,7 @@ class SparseMatrixMultiplicationCRS : public ppc::core::Task {
   bool post_processing() override;
 
  private:
-  SparseMatrixCRS* X{}, * Y{}, * Z{};
+  SparseMatrixCRS* X{}, *Y{}, * Z{};
 };
 
 #endif  // TASKS_SEQ_SAFAROV_N_SPARSE_MATMULT_CRS_INCLUDE_SPARSE_MATMULT_CRS_HPP_
