@@ -8,12 +8,9 @@
 
 TEST(Safarov_N_SparseMatMultCRS, TestOne) {
   // Create data
-  SparseMatrixCRS x(6, 6, {1, 2, 3, 4, 2, 5, 7}, {0, 4, 2, 3, 3, 5, 1},
-                   {0, 2, 4, 4, 6, 6, 7});
-  SparseMatrixCRS y(6, 6, {3, 1, 1, 3, 1, 3, 2, 4}, {0, 5, 2, 3, 0, 2, 1, 4},
-                    {0, 2, 3, 3, 4, 6, 8});
-  SparseMatrixCRS correctAnswer(6, 6, {5, 6, 1, 12, 10, 6, 20, 7}, {0, 2, 5, 3, 1, 3, 4, 2},
-                 {0, 3, 4, 4, 7, 7, 8});
+  SparseMatrixCRS x(6, 6, {1, 2, 3, 4, 2, 5, 7}, {0, 4, 2, 3, 3, 5, 1}, {0, 2, 4, 4, 6, 6, 7});
+  SparseMatrixCRS y(6, 6, {3, 1, 1, 3, 1, 3, 2, 4}, {0, 5, 2, 3, 0, 2, 1, 4}, {0, 2, 3, 3, 4, 6, 8});
+  SparseMatrixCRS correctAnswer(6, 6, {5, 6, 1, 12, 10, 6, 20, 7}, {0, 2, 5, 3, 1, 3, 4, 2}, {0, 3, 4, 4, 7, 7, 8});
   SparseMatrixCRS z;
 
   // Create TaskData

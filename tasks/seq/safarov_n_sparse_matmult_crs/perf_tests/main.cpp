@@ -8,7 +8,6 @@
 #include "core/perf/include/perf.hpp"
 #include "seq/safarov_n_sparse_matmult_crs/include/sparse_matmult_crs.hpp"
 
-
 TEST(Safarov_N_SparseMatMultCRS, test_pipeline_run) {
   SparseMatrixCRS X = SparseMatrixCRS(createRandomMatrix(235, 235, 0.80));
   SparseMatrixCRS Y = SparseMatrixCRS(createRandomMatrix(235, 235, 0.80));
