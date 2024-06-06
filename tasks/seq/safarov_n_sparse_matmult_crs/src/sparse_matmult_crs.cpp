@@ -8,10 +8,10 @@
 
 SparseMatrixCRS::SparseMatrixCRS(int _numberOfColumns, int _numberOfRows, const std::vector<double>& _values,
                                  const std::vector<int>& _columnIndexes, const std::vector<int>& _pointers)
-    : values(_values),
-      numberOfColumns(_numberOfColumns),
-      columnIndexes(_columnIndexes),
+    : numberOfColumns(_numberOfColumns),
       numberOfRows(_numberOfRows),
+      values(_values),
+      columnIndexes(_columnIndexes),
       pointers(_pointers) {}
 
 SparseMatrixCRS::SparseMatrixCRS(int _numberOfColumns, int _numberOfRows) {
