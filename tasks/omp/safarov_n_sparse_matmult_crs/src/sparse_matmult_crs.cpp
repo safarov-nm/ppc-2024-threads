@@ -1,12 +1,12 @@
 // Copyright 2024 Safarov Nurlan
-#include "omp/safarov_n_sparse_matmult_crs/include/sparse_matmult_crs_omp.hpp"
-
 #include <omp.h>
 
 #include <algorithm>
 #include <cmath>
 #include <utility>
 #include <vector>
+
+#include "omp/safarov_n_sparse_matmult_crs/include/sparse_matmult_crs_omp.hpp"
 
 SparseMatrixCRS::SparseMatrixCRS(int _numberOfColumns, int _numberOfRows, const std::vector<double>& _values,
                                  const std::vector<int>& _columnIndexes, const std::vector<int>& _pointers)
