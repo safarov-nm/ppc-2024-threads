@@ -37,7 +37,8 @@ std::vector<std::vector<double>> multiplyMatrices(std::vector<std::vector<double
 
 class SparseMatrixMultiplicationCRS_TBB : public ppc::core::Task {
  public:
-  explicit SparseMatrixMultiplicationCRS_TBB(std::shared_ptr<ppc::core::TaskData> taskData_) : Task(std::move(taskData_)) {}
+  explicit SparseMatrixMultiplicationCRS_TBB(std::shared_ptr<ppc::core::TaskData> taskData_)
+      : Task(std::move(taskData_)) {}
   bool validation() override;
   bool pre_processing() override;
   bool run() override;

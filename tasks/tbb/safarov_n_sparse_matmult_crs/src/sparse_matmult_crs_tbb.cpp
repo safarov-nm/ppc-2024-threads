@@ -188,7 +188,6 @@ bool SparseMatrixMultiplicationCRS_TBB::pre_processing() {
   Z = reinterpret_cast<SparseMatrixCRS*>(taskData->outputs[0]);
 
   *Y = sparseMatrixTransposeCRS(*Y);
-  Z->numberOfColumns = Y->numberOfRows;
   return true;
 }
 
@@ -204,42 +203,41 @@ bool SparseMatrixMultiplicationCRS_TBB::run() {
   int resultColumnIndexes = Y->numberOfRows;  // After transposing matrix Y
 
   int sizePart = 10;
-  tbb::parallel_for(
-      tbb::blocked_range<int>(0, X->numberOfRows, sizePart),
-      [&](tbb::blocked_range<int> r) {
-        for (int rOne = r.begin(); rOne != r.end(); ++rOne) {
-          for (int rTwo = 0; rTwo < Y->numberOfRows; rTwo++) {
-            int firstCurrentPointer = X->pointers[rOne];
-            int secondCurrentPointer = Y->pointers[rTwo];
-            int firstEndPointer = X->pointers[rOne + 1] - 1;
-            int secondEndPointer = Y->pointers[rTwo + 1] - 1;
-            double v = 0;
+  tbb::parallel_for(tbb::blocked_range<int>(0, X->numberOfRows, sizePart), [&](tbb::blocked_range<int> r) {
+    for (int rOne = r.begin(); rOne != r.end(); ++rOne) {
+      for (int rTwo = 0; rTwo < Y->numberOfRows; rTwo++) {
+        int firstCurrentPointer = X->pointers[rOne];
+        int secondCurrentPointer = Y->pointers[rTwo];
+        int firstEndPointer = X->pointers[rOne + 1] - 1;
+        int secondEndPointer = Y->pointers[rTwo + 1] - 1;
+        double v = 0;
 
-            while ((secondCurrentPointer <= secondEndPointer) && (firstCurrentPointer <= firstEndPointer)) {
-              if (X->columnIndexes[firstCurrentPointer] <= Y->columnIndexes[secondCurrentPointer]) {
-                if (X->columnIndexes[firstCurrentPointer] == Y->columnIndexes[secondCurrentPointer]) {
-                  v = v + (X->values[firstCurrentPointer]) * (Y->values[secondCurrentPointer]);
-                  secondCurrentPointer++;
-                  firstCurrentPointer++;
-                } else {
-                  firstCurrentPointer++;
-                }
-              } else {
-                secondCurrentPointer++;
-              }
+        while ((secondCurrentPointer <= secondEndPointer) && (firstCurrentPointer <= firstEndPointer)) {
+          if (X->columnIndexes[firstCurrentPointer] <= Y->columnIndexes[secondCurrentPointer]) {
+            if (X->columnIndexes[firstCurrentPointer] == Y->columnIndexes[secondCurrentPointer]) {
+              v += (X->values[firstCurrentPointer]) * (Y->values[secondCurrentPointer]);
+              secondCurrentPointer++;
+              firstCurrentPointer++;
+            } else {
+              firstCurrentPointer++;
             }
-            if (v != 0) {
-              localValues[rOne].push_back(v);
-              localColumnIndexes[rOne].push_back(rTwo);
-            }
+          } else {
+            secondCurrentPointer++;
           }
         }
-      });
+        if (v != 0) {
+          localValues[rOne].push_back(v);
+          localColumnIndexes[rOne].push_back(rTwo);
+        }
+      }
+    }
+  });
+
   int elementCounter = 0;
   finalPointers.push_back(elementCounter);
 
   for (int indRow = 0; indRow < X->numberOfRows; indRow++) {
-    elementCounter = elementCounter + localColumnIndexes[indRow].size();
+    elementCounter += localColumnIndexes[indRow].size();
     finalColumnIndexes.insert(finalColumnIndexes.end(), localColumnIndexes[indRow].begin(),
                               localColumnIndexes[indRow].end());
     finalValues.insert(finalValues.end(), localValues[indRow].begin(), localValues[indRow].end());
