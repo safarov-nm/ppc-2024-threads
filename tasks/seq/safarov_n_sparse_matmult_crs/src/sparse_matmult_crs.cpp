@@ -186,7 +186,6 @@ bool SparseMatrixMultiplicationCRS::pre_processing() {
   Z = reinterpret_cast<SparseMatrixCRS*>(taskData->outputs[0]);
 
   *Y = sparseMatrixTransposeCRS(*Y);
-  Z->numberOfColumns = Y->numberOfRows;
   return true;
 }
 
