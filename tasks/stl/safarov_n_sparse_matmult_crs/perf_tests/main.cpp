@@ -1,9 +1,9 @@
 // Copyright 2024 Safarov Nurlan
 #include <gtest/gtest.h>
 
-#include <thread>
 #include <chrono>
 #include <random>
+#include <thread>
 #include <vector>
 
 #include "core/perf/include/perf.hpp"
